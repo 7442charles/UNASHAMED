@@ -1,31 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unashamed | Coming Soon</title>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-            font-family: sans-serif;
-            text-align: center;
-        }
-        img {
-            max-width: 80%;
-            height: auto;
-            border-radius: 10px;
-        }
-        h1 { color: #333; margin-top: 20px; }
-    </style>
-</head>
-<body>
-    <img src="/images/Work_in_progress.webp" alt="Work in progress">
-    <h1>Unashamed.co.ke is coming soon</h1>
-</body>
-</html>
+<%- include('partials/header') %>
+
+<!-- Hero Section -->
+<section class="bg-black text-white py-24 px-6 rounded-lg mb-16 mt-4 text-center">
+    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 uppercase">Wear Your Truth</h1>
+    <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+        Unapologetic style for the bold. Shop the latest Unashamed collection and order directly via WhatsApp.
+    </p>
+    <a href="#shop" class="inline-block bg-white text-black px-8 py-3 font-bold uppercase tracking-wider hover:bg-gray-200 transition">
+        Shop The Drop
+    </a>
+</section>
+
+<!-- Featured Products Grid -->
+<section id="shop" class="mb-20">
+    <div class="mb-8 border-b border-gray-200 pb-4">
+        <h2 class="text-3xl font-bold uppercase tracking-tighter">Featured Items</h2>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <!-- Loop through the products passed from the router -->
+        <% products.forEach(product => { %>
+            <div class="group flex flex-col">
+                <!-- Product Image -->
+                <div class="overflow-hidden bg-gray-100 rounded-md mb-4 aspect-[4/5]">
+                    <img 
+                        src="<%= product.image %>" 
+                        alt="<%= product.name %>" 
+                        class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500 ease-in-out"
+                    >
+                </div>
+                
+                <!-- Product Details -->
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-gray-900 leading-tight pr-4"><%= product.name %></h3>
+                    <p class="text-lg font-medium text-gray-600 whitespace-nowrap">KES <%= product.price %></p>
+                </div>
+                
+                <!-- Call to Action -->
+                <form action="/checkout" method="POST" class="mt-auto">
+                    <input type="hidden" name="productId" value="<%= product.id %>">
+                    <!-- We default quantity to 1 for now -->
+                    <input type="hidden" name="quantity" value="1">
+                    
+                    <button type="submit" class="w-full bg-black text-white py-3 font-bold uppercase tracking-widest hover:bg-gray-800 transition">
+                        Buy Now
+                    </button>
+                </form>
+            </div>
+        <% }) %>
+    </div>
+</section>
+
+<section id="collections" class="mb-20 pt-10">
+    <div class="mb-8 border-b border-gray-200 pb-4 flex justify-between items-end">
+        <h2 class="text-3xl font-bold uppercase tracking-tighter">Collections</h2>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <% collections.forEach(collection => { %>
+            <a href="/collections/<%= collection.slug %>" class="group relative block overflow-hidden rounded-lg aspect-video bg-black">
+                <img src="<%= collection.image %>" alt="<%= collection.name %>" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 transition duration-500 group-hover:scale-105">
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center">
+                    <h3 class="text-4xl font-extrabold uppercase tracking-widest mb-2"><%= collection.name %></h3>
+                    <p class="text-sm tracking-wide opacity-0 group-hover:opacity-100 transition duration-300 transform translate-y-4 group-hover:translate-y-0">
+                        Explore Collection &rarr;
+                    </p>
+                </div>
+            </a>
+        <% }) %>
+    </div>
+</section>
+
+<section id="todays-pick" class="mb-20">
+    <div class="mb-8 border-b border-gray-200 pb-4">
+        <h2 class="text-3xl font-bold uppercase tracking-tighter">Today's Pick</h2>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <% allProducts.forEach(product => { %>
+            <div class="group flex flex-col border border-gray-100 p-2 hover:shadow-lg transition">
+                <div class="overflow-hidden bg-gray-100 rounded-md mb-4 aspect-[4/5]">
+                    <img 
+                        src="<%= product.image %>" 
+                        alt="<%= product.name %>" 
+                        class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                    >
+                </div>
+                <div class="px-2">
+                    <h3 class="text-sm font-bold text-gray-900 mb-1"><%= product.name %></h3>
+                    <p class="text-sm text-gray-600 mb-4">KES <%= product.price %></p>
+                    <form action="/checkout" method="POST">
+                        <input type="hidden" name="productId" value="<%= product.id %>">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="w-full bg-black text-white py-2 text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition">
+                            Buy Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</section>
+
+<%- include('partials/footer') %>
