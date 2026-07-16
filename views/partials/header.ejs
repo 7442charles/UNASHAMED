@@ -53,13 +53,21 @@
             <a href="/" class="text-3xl font-black tracking-tighter uppercase italic text-black">Unashamed</a>
 
             <div class="hidden lg:flex space-x-8 font-bold text-[13px] tracking-[0.2em] uppercase">
+                <a href="/" class="text-gray-900 hover-underline pb-1">Home</a>
                 <a href="/shop" class="text-gray-900 hover-underline pb-1">Shop All</a>
                 <a href="/#collections" class="text-gray-900 hover-underline pb-1">Collections</a>
             </div>
 
-            <button class="text-gray-900">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-            </button>
+            <!-- Desktop Navigation: Add this after the shopping cart <button> -->
+            <div class="flex items-center space-x-6">
+                <button class="text-gray-900">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                </button>
+                <!-- Login Link -->
+                <a href="/auth/login" class="hidden lg:block font-bold text-[13px] tracking-[0.2em] uppercase text-gray-900 hover-underline pb-1">
+                    Login
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -72,6 +80,7 @@
                 <a href="/" class="text-black hover:text-gray-500 transition">Home</a>
                 <a href="/shop" class="text-black hover:text-gray-500 transition">Shop All</a>
                 <a href="/#collections" class="text-black hover:text-gray-500 transition">Collections</a>
+                <a href="/auth/login" class="text-black hover:text-gray-500 transition border-t border-gray-100 pt-8">Login</a>
             </div>
         </div>
     </div>
