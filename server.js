@@ -15,6 +15,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'unashamed_secret_key',
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: false }
 }));
 
 // View Engine Setup

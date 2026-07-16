@@ -1,6 +1,41 @@
-</main>
-    <footer class="bg-black text-white p-6 text-center mt-auto">
-        <p class="text-sm">&copy; <%= new Date().getFullYear() %> Unashamed. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+<footer class="bg-black text-white pt-12 pb-8 mt-auto w-full">
+    <!-- Removed max-w-7xl and px-6 to allow full-width -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 md:px-12 text-center md:text-left">
+        
+        <!-- About Section -->
+        <div class="px-4">
+            <h3 class="text-lg font-bold mb-4 uppercase tracking-widest">About Us</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                Unashamed Saved & Unashamed is a premium clothing brand dedicated to quality, purpose, and empowering self-expression.
+            </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="px-4">
+            <h3 class="text-lg font-bold mb-4 uppercase tracking-widest">Quick Links</h3>
+            <ul class="space-y-2 text-sm text-gray-400">
+                <li><a href="/shop" class="hover:text-white transition">Shop</a></li>
+                <li><a href="/about" class="hover:text-white transition">About</a></li>
+                <li><a href="/contact" class="hover:text-white transition">Contact</a></li>
+                <li><a href="/faq" class="hover:text-white transition">FAQ</a></li>
+            </ul>
+        </div>
+
+        <!-- Policies -->
+        <div class="px-4">
+            <h3 class="text-lg font-bold mb-4 uppercase tracking-widest">Policies</h3>
+            <ul class="space-y-2 text-sm text-gray-400">
+                <li><a href="/privacy" class="hover:text-white transition">Privacy Policy</a></li>
+                <li><a href="/terms" class="hover:text-white transition">Terms of Service</a></li>
+                <li><a href="/shipping" class="hover:text-white transition">Shipping Info</a></li>
+                <li><a href="/returns" class="hover:text-white transition">Returns</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-gray-800 mt-12 pt-8 text-center text-xs text-gray-500">
+        <p>&copy; <%= new Date().getFullYear() %> Unashamed Saved & Unashamed. All rights reserved.</p>
+        <p class="mt-2 font-medium tracking-wide">Express What You Believe In</p>
+    </div>
+</footer>

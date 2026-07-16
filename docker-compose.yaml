@@ -3,6 +3,7 @@ services:
   web:
     build: .
     container_name: unashamed_web
+    restart: unless-stopped
     ports:
       - "4090:4090"
     volumes:
@@ -18,7 +19,7 @@ services:
   db:
     image: mysql:8.0
     container_name: unashamed_db
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_ROOT_PASSWORD: ${DB_PASS}

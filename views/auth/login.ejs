@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-sm border border-gray-100">
+        <h2 class="text-2xl font-black uppercase tracking-tighter mb-6 text-center">Sign In</h2>
+        
+        <form action="/auth/login" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-widest mb-1">Email</label>
+                <input type="email" name="email" class="w-full p-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-black">
+            </div>
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-widest mb-1">Password</label>
+                <input type="password" name="password" class="w-full p-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-black">
+            </div>
+            <button type="submit" class="w-full bg-black text-white py-3 font-bold uppercase tracking-widest hover:bg-gray-800 transition">
+                Login
+            </button>
+        </form>
+
+        <div class="mt-6 text-center text-sm">
+            <a href="/auth/forgot-password" class="text-gray-500 hover:text-black">Forgot Password?</a>
+            <p class="mt-2 text-gray-600">Don't have an account? <a href="/auth/register" class="font-bold text-black">Sign Up</a></p>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
