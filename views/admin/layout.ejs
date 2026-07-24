@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Admin Panel' %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="/images/unashamed-logo.webp" type="image/webp">
+    <style>
+        .sidebar-link { transition: all 0.2s; }
+        .sidebar-link:hover { background: #f3f4f6; }
+        .sidebar-link.active { background: #e5e7eb; font-weight: 600; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="bg-white border-r border-gray-200 w-64 flex-shrink-0 hidden md:flex flex-col">
+            <div class="p-6 border-b border-gray-100">
+                <a href="/admin/dashboard" class="text-2xl font-black uppercase tracking-tighter italic">Unashamed</a>
+                <p class="text-xs text-gray-500 uppercase tracking-wider font-bold mt-1">Admin Panel</p>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto p-4 space-y-1">
+                <a href="/admin/dashboard" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 <%= currentPage === 'dashboard' ? 'active' : '' %>">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    Dashboard
+                </a>
+                <a href="/admin/products" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 <%= currentPage === 'products' ? 'active' : '' %>">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                    Products
+                </a>
+                <a href="/admin/collections" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 <%= currentPage === 'collections' ? 'active' : '' %>">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    Collections
+                </a>
+                <a href="/admin/offers" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 <%= currentPage === 'offers' ? 'active' : '' %>">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Offers
+                </a>
+                <a href="/admin/orders" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 <%= currentPage === 'orders' ? 'active' : '' %>">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    Orders
+                </a>
+                <a href="/admin/carts" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 <%= currentPage === 'carts' ? 'active' : '' %>">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    Carts & Analytics
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-gray-100">
+                <div class="flex items-center gap-3 px-4 py-2">
+                    <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-xs font-bold uppercase">
+                        <%= admin.name ? admin.name.charAt(0) : 'A' %>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-bold text-gray-900 truncate"><%= admin.name %></p>
+                        <p class="text-xs text-gray-500 capitalize"><%= admin.role %> / <a href="/admin/logout" class="text-red-500 hover:text-red-700">Logout</a></p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Mobile sidebar toggle -->
+        <div class="md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 p-4">
+            <div class="flex items-center justify-between">
+                <button id="mobile-menu-btn" class="p-1">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <span class="text-lg font-black uppercase tracking-tighter italic">Unashamed Admin</span>
+                <a href="/admin/logout" class="text-sm text-red-500 font-medium">Logout</a>
+            </div>
+        </div>
+
+        <!-- Mobile sidebar drawer -->
+        <div id="mobile-sidebar" class="fixed inset-0 z-[60] hidden">
+            <div class="absolute inset-0 bg-black/30" id="mobile-overlay"></div>
+            <aside class="absolute left-0 top-0 bottom-0 w-72 bg-white shadow-2xl p-6 overflow-y-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <span class="text-2xl font-black uppercase tracking-tighter italic">Unashamed</span>
+                    <button id="mobile-close-btn">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <nav class="space-y-2">
+                    <a href="/admin/dashboard" class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100">Dashboard</a>
+                    <a href="/admin/products" class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100">Products</a>
+                    <a href="/admin/collections" class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100">Collections</a>
+                    <a href="/admin/offers" class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100">Offers</a>
+                    <a href="/admin/orders" class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100">Orders</a>
+                    <a href="/admin/carts" class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100">Carts & Analytics</a>
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto md:pt-0 pt-16">
+            <div class="p-6 max-w-7xl mx-auto">
+                <%- body %>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile sidebar toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const mobileCloseBtn = document.getElementById('mobile-close-btn');
+
+        if (menuBtn && mobileSidebar) {
+            function openMobileSidebar() {
+                mobileSidebar.classList.remove('hidden');
+            }
+            function closeMobileSidebar() {
+                mobileSidebar.classList.add('hidden');
+            }
+            menuBtn.addEventListener('click', openMobileSidebar);
+            if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileSidebar);
+            if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileSidebar);
+        }
+    </script>
+</body>
+</html>
+

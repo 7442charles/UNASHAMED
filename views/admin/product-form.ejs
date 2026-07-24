@@ -1,0 +1,87 @@
+<% currentPage = 'products';
+   var isEdit = typeof product !== 'undefined' && product !== null; %>
+<%- include('partials/admin-head') %>
+
+<div class="flex items-center justify-between mb-8">
+    <div>
+        <h1 class="text-3xl font-extrabold tracking-tighter uppercase"><%= isEdit ? 'Edit' : 'Add' %> Product</h1>
+        <p class="text-gray-500 text-sm mt-1"><%= isEdit ? 'Update product details' : 'Add a new product to your catalog' %></p>
+    </div>
+    <a href="/admin/products" class="text-sm text-gray-500 hover:text-black transition font-medium">&larr; Back to Products</a>
+</div>
+
+<% if (typeof error !== 'undefined' && error) { %>
+    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm font-medium"><%= error %></div>
+<% } %>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+    <form action="/admin/products/save<%= isEdit ? '/' + product.id : '' %>" method="POST" class="space-y-6 max-w-4xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Product Name *</label>
+                <input type="text" name="name" required value="<%= isEdit ? product.name : '' %>" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none" placeholder="e.g. Unashamed Classic Tee">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Slug *</label>
+                <input type="text" name="slug" required value="<%= isEdit ? product.slug : '' %>" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none" placeholder="e.g. unashamed-classic-tee">
+            </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1.5">Description</label>
+            <textarea name="description" rows="4" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none resize-none" placeholder="Product description..."><%= isEdit && product.description ? product.description : '' %></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Price *</label>
+                <input type="number" name="price" required value="<%= isEdit ? product.price : '' %>" step="0.01" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none" placeholder="1500">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Compare Price (Optional)</label>
+                <input type="number" name="compare_price" value="<%= isEdit && product.compare_price ? product.compare_price : '' %>" step="0.01" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none" placeholder="2000">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Stock</label>
+                <input type="number" name="stock" value="<%= isEdit ? product.stock : '0' %>" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none" placeholder="50">
+            </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1.5">Image URL</label>
+            <input type="text" name="image" value="<%= isEdit && product.image ? product.image : '' %>" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none" placeholder="https://images.unsplash.com/...">
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1.5">Collections</label>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <% if (collections.length === 0) { %>
+                    <p class="text-sm text-gray-400 col-span-full">No collections available. <a href="/admin/collections/add" class="text-black underline">Create one</a></p>
+                <% } else { %>
+                    <% collections.forEach(function(c) { %>
+                        <label class="flex items-center gap-2 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                            <input type="checkbox" name="collection_ids" value="<%= c.id %>" 
+                                <%= (typeof selectedCollections !== 'undefined' && selectedCollections.includes(c.id)) ? 'checked' : '' %>
+                                class="w-4 h-4 accent-black"
+                            >
+                            <span class="text-sm font-medium"><%= c.name %></span>
+                        </label>
+                    <% }); %>
+                <% } %>
+            </div>
+
+        <div>
+            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition w-fit">
+                <input type="checkbox" name="is_active" value="1" <%= (isEdit && product.is_active) || !isEdit ? 'checked' : '' %> class="w-4 h-4 accent-black">
+                <span class="text-sm font-medium">Active (visible on store)</span>
+            </label>
+        </div>
+
+        <div class="flex items-center gap-4 pt-4 border-t border-gray-100">
+            <button type="submit" class="bg-black text-white px-8 py-3 rounded-lg font-bold uppercase tracking-wider text-sm hover:bg-gray-800 transition">
+                <%= isEdit ? 'Update Product' : 'Create Product' %>
+            </button>
+            <a href="/admin/products" class="text-sm text-gray-500 hover:text-black transition font-medium">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<%- include('partials/admin-foot') %>

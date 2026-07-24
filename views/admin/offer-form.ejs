@@ -1,0 +1,81 @@
+<% currentPage = 'offers';
+   var isEdit = typeof offer !== 'undefined' && offer !== null; %>
+<%- include('partials/admin-head') %>
+
+<div class="flex items-center justify-between mb-8">
+    <div>
+        <h1 class="text-3xl font-extrabold tracking-tighter uppercase"><%= isEdit ? 'Edit' : 'Create' %> Offer</h1>
+        <p class="text-gray-500 text-sm mt-1"><%= isEdit ? 'Update offer details' : 'Set up a new promotion' %></p>
+    </div>
+    <a href="/admin/offers" class="text-sm text-gray-500 hover:text-black transition font-medium">&larr; Back to Offers</a>
+</div>
+
+<% if (typeof error !== 'undefined' && error) { %>
+    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm font-medium"><%= error %></div>
+<% } %>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+    <form action="/admin/offers/save<%= isEdit ? '/' + offer.id : '' %>" method="POST" class="space-y-6 max-w-3xl">
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1.5">Offer Name *</label>
+            <input type="text" name="name" required value="<%= isEdit ? offer.name : '' %>" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none" placeholder="e.g. Summer Sale - 20% Off">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Discount Type *</label>
+                <select name="type" required class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none">
+                    <option value="percentage" <%= isEdit && offer.type === 'percentage' ? 'selected' : '' %>>Percentage (%)</option>
+                    <option value="fixed" <%= isEdit && offer.type === 'fixed' ? 'selected' : '' %>>Fixed Amount (KES)</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Value *</label>
+                <input type="number" name="value" required value="<%= isEdit ? offer.value : '' %>" step="0.01" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none" placeholder="20">
+            </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Start Date *</label>
+                <input type="datetime-local" name="start_date" required value="<%= isEdit ? new Date(offer.start_date).toISOString().slice(0, 16) : '' %>" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">End Date *</label>
+                <input type="datetime-local" name="end_date" required value="<%= isEdit ? new Date(offer.end_date).toISOString().slice(0, 16) : '' %>" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-black focus:border-black outline-none">
+            </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-1.5">Apply to Products</label>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <% if (products.length === 0) { %>
+                    <p class="text-sm text-gray-400 col-span-full">No products available. <a href="/admin/products/add" class="text-black underline">Create one</a></p>
+                <% } else { %>
+                    <% products.forEach(function(product) { %>
+                        <label class="flex items-center gap-2 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition">
+                            <input type="checkbox" name="product_ids" value="<%= product.id %>" 
+                                <%= (typeof selectedProducts !== 'undefined' && selectedProducts.includes(product.id)) ? 'checked' : '' %>
+                                class="w-4 h-4 accent-black"
+                            >
+                            <span class="text-sm font-medium"><%= product.name %></span>
+                        </label>
+                    <% }); %>
+                <% } %>
+            </div>
+
+        <div>
+            <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition w-fit">
+                <input type="checkbox" name="is_active" value="1" <%= (isEdit && offer.is_active) || !isEdit ? 'checked' : '' %> class="w-4 h-4 accent-black">
+                <span class="text-sm font-medium">Active</span>
+            </label>
+        </div>
+
+        <div class="flex items-center gap-4 pt-4 border-t border-gray-100">
+            <button type="submit" class="bg-black text-white px-8 py-3 rounded-lg font-bold uppercase tracking-wider text-sm hover:bg-gray-800 transition">
+                <%= isEdit ? 'Update Offer' : 'Create Offer' %>
+            </button>
+            <a href="/admin/offers" class="text-sm text-gray-500 hover:text-black transition font-medium">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<%- include('partials/admin-foot') %>

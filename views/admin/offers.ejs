@@ -1,0 +1,78 @@
+<% currentPage = 'offers'; %>
+<%- include('partials/admin-head') %>
+
+<div class="flex items-center justify-between mb-8">
+    <div>
+        <h1 class="text-3xl font-extrabold tracking-tighter uppercase">Offers</h1>
+        <p class="text-gray-500 text-sm mt-1">Create and manage promotions & discounts.</p>
+    </div>
+    <a href="/admin/offers/add" class="bg-black text-white px-6 py-3 rounded-lg font-bold uppercase tracking-wider text-sm hover:bg-gray-800 transition flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        Create Offer
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                    <th class="text-left py-4 px-6 font-bold text-gray-500 uppercase tracking-wider text-xs">Offer Name</th>
+                    <th class="text-left py-4 px-6 font-bold text-gray-500 uppercase tracking-wider text-xs">Type</th>
+                    <th class="text-left py-4 px-6 font-bold text-gray-500 uppercase tracking-wider text-xs">Value</th>
+                    <th class="text-left py-4 px-6 font-bold text-gray-500 uppercase tracking-wider text-xs">Duration</th>
+                    <th class="text-left py-4 px-6 font-bold text-gray-500 uppercase tracking-wider text-xs">Products</th>
+                    <th class="text-left py-4 px-6 font-bold text-gray-500 uppercase tracking-wider text-xs">Status</th>
+                    <th class="text-right py-4 px-6 font-bold text-gray-500 uppercase tracking-wider text-xs">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (offers.length === 0) { %>
+                    <tr>
+                        <td colspan="7" class="py-12 text-center text-gray-400">
+                            <p class="font-medium">No offers yet</p>
+                            <a href="/admin/offers/add" class="text-sm text-black underline mt-2 inline-block">Create your first offer</a>
+                        </td>
+                    </tr>
+                <% } else { %>
+                    <% offers.forEach(function(offer) { %>
+                        <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
+                            <td class="py-4 px-6 font-bold"><%= offer.name %></td>
+                            <td class="py-4 px-6 capitalize"><%= offer.type %></td>
+                            <td class="py-4 px-6">
+                                <%= offer.type === 'percentage' ? offer.value + '%' : 'KES ' + Number(offer.value).toLocaleString() %>
+                            </td>
+                            <td class="py-4 px-6 text-xs">
+                                <%= new Date(offer.start_date).toLocaleDateString() %> — <%= new Date(offer.end_date).toLocaleDateString() %>
+                            </td>
+                            <td class="py-4 px-6"><%= offer.product_count %> product(s)</td>
+                            <td class="py-4 px-6">
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-xs px-2 py-1 rounded-full font-medium w-fit <%= offer.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-500' %>">
+                                        <%= offer.is_active ? 'Active' : 'Inactive' %>
+                                    </span>
+                                    <% if (new Date(offer.end_date) < new Date()) { %>
+                                        <span class="text-xs text-red-500 font-medium">Expired</span>
+                                    <% } %>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6 text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a href="/admin/offers/edit/<%= offer.id %>" class="p-2 hover:bg-gray-100 rounded-lg transition" title="Edit">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                    </a>
+                                    <form action="/admin/offers/delete/<%= offer.id %>" method="POST" onsubmit="return confirm('Delete this offer?')">
+                                        <button type="submit" class="p-2 hover:bg-red-50 rounded-lg transition text-red-500" title="Delete">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+<%- include('partials/admin-foot') %>

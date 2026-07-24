@@ -1,0 +1,25 @@
+</div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile sidebar toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const mobileCloseBtn = document.getElementById('mobile-close-btn');
+
+        if (menuBtn && mobileSidebar) {
+            function openMobileSidebar() {
+                mobileSidebar.classList.remove('hidden');
+            }
+            function closeMobileSidebar() {
+                mobileSidebar.classList.add('hidden');
+            }
+            menuBtn.addEventListener('click', openMobileSidebar);
+            if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileSidebar);
+            if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileSidebar);
+        }
+    </script>
+</body>
+</html>

@@ -11,5 +11,16 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
+// Test DB connection on startup
+pool.getConnection((err, connection) => {
+    if (err) {
+        console.error('❌ DATABASE CONNECTION FAILED:', err.message);
+        console.error('   Ensure MySQL is running and database exists.');
+    } else {
+        console.log(`✅ DATABASE CONNECTED: ${process.env.DB_NAME} @ ${process.env.DB_HOST}`);
+        connection.release();
+    }
+});
+
 // Export the promise-based wrapper so we can use async/await in our controllers
 module.exports = pool.promise();

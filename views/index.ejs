@@ -37,15 +37,24 @@
                 </div>
                 
                 <!-- Call to Action -->
-                <form action="/checkout" method="POST" class="mt-auto">
-                    <input type="hidden" name="productId" value="<%= product.id %>">
-                    <!-- We default quantity to 1 for now -->
-                    <input type="hidden" name="quantity" value="1">
-                    
-                    <button type="submit" class="w-full bg-black text-white py-3 font-bold uppercase tracking-widest hover:bg-gray-800 transition">
-                        Buy Now
+                <div class="flex gap-2 mt-auto">
+                    <button type="button" 
+                        class="add-to-cart-btn flex-1 bg-white text-black border-2 border-black py-3 font-bold uppercase tracking-widest hover:bg-gray-100 transition text-sm"
+                        data-id="<%= product.id %>"
+                        data-name="<%= product.name %>"
+                        data-price="<%= product.price %>"
+                        data-image="<%= product.image %>">
+                        Add to Cart
                     </button>
-                </form>
+                    <a href="/capture-lead" 
+                        class="buy-now-btn flex-1 bg-black text-white py-3 font-bold uppercase tracking-widest hover:bg-gray-800 transition text-sm text-center block leading-tight"
+                        data-id="<%= product.id %>"
+                        data-name="<%= product.name %>"
+                        data-price="<%= product.price %>"
+                        data-image="<%= product.image %>">
+                        Buy Now
+                    </a>
+                </div>
             </div>
         <% }) %>
     </div>
@@ -89,13 +98,24 @@
                 <div class="px-2">
                     <h3 class="text-sm font-bold text-gray-900 mb-1"><%= product.name %></h3>
                     <p class="text-sm text-gray-600 mb-4">KES <%= product.price %></p>
-                    <form action="/checkout" method="POST">
-                        <input type="hidden" name="productId" value="<%= product.id %>">
-                        <input type="hidden" name="quantity" value="1">
-                        <button type="submit" class="w-full bg-black text-white py-2 text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition">
-                            Buy Now
+                    <div class="flex gap-1">
+                        <button type="button" 
+                            class="add-to-cart-btn flex-1 bg-white text-black border-2 border-black py-2 text-xs font-bold uppercase tracking-widest hover:bg-gray-100 transition"
+                            data-id="<%= product.id %>"
+                            data-name="<%= product.name %>"
+                            data-price="<%= product.price %>"
+                            data-image="<%= product.image %>">
+                            🛒
                         </button>
-                    </form>
+                        <a href="/capture-lead" 
+                            class="buy-now-btn flex-1 bg-black text-white py-2 text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition text-center block"
+                            data-id="<%= product.id %>"
+                            data-name="<%= product.name %>"
+                            data-price="<%= product.price %>"
+                            data-image="<%= product.image %>">
+                            Buy Now
+                        </a>
+                    </div>
                 </div>
             </div>
         <% }) %>
